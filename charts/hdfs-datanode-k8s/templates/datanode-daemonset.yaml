@@ -43,10 +43,16 @@ metadata:
     chart: {{ template "hdfs-k8s.subchart" . }}
     release: {{ .Release.Name }}
 spec:
+  selector:
+    matchLabels:
+      app: {{ template "hdfs-k8s.datanode.name" . }}
+      chart: {{ template "hdfs-k8s.subchart" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         app: {{ template "hdfs-k8s.datanode.name" . }}
+        chart: {{ template "hdfs-k8s.subchart" . }}
         release: {{ .Release.Name }}
       {{- if .Values.podAnnotations }}
       annotations:
@@ -189,6 +195,3 @@ spec:
           emptyDir: {}
         {{- end }}
         {{- end }}
-  selector:
-    app: {{ template "hdfs-k8s.datanode.name" . }}
-    release: {{ .Release.Name }}
